@@ -25,4 +25,4 @@ console.log(Object.values(gifsList).map(gif => gif.src.startsWith("//") ? "https
 ## 3. Get files in the current directory of the app(./Discord Gifs Export)
 
 # To-Do
-- Auto convert .mp4/.bin to .gif
+- ~~Auto convert .mp4/.bin to .gif~~ 🟢 Done

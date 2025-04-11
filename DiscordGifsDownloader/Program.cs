@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.Drawing;
+using System.Net;
+using FFMpegCore;
 
 namespace DiscordGifsDownloader
 {
@@ -6,6 +8,8 @@ namespace DiscordGifsDownloader
     {
         static void Main(string[] args)
         {
+            GlobalFFOptions.Configure(options => options.BinaryFolder = "./bin");
+
             const string exportDir = "./Discord Gifs Export";
             Directory.CreateDirectory(exportDir);
 
@@ -21,7 +25,8 @@ namespace DiscordGifsDownloader
 
             WebClient webClient = new WebClient();
 
-            for (int i = 0; i < links.Length; i++) {
+            for (int i = 0; i < links.Length; i++)
+            {
                 try
                 {
                     string url = links[i];
@@ -35,12 +40,29 @@ namespace DiscordGifsDownloader
                         ext = ".bin";
                     }
 
-                    webClient.DownloadFile(links[i], $"{exportDir}/discord-gif_{Guid.NewGuid().ToString()}{ext}");
-                    Console.WriteLine("[OK]" + url);
+                    string downloadPath = $"{exportDir}/discord-gif_{Guid.NewGuid().ToString()}";
+                    webClient.DownloadFile(links[i], downloadPath+ext);
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("[DOWNLOAD] [OK] " + url);
+
+                    if (ext == ".mp4" || ext == ".bin")
+                    {
+                        bool convertStatus = FFMpeg.GifSnapshot(downloadPath+ext, $"{downloadPath}.gif");
+                        if (!convertStatus)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine($"[CONVERT] [ERROR] {downloadPath}{ext} to {downloadPath}.gif");
+                        }
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine($"[CONVERT] [OK] {downloadPath}{ext} to {downloadPath}.gif");
+                        File.Delete(downloadPath+ext);
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"[Error]: {ex.Message}");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"[ERROR]: {ex.Message}");
                 }
             }
         }
