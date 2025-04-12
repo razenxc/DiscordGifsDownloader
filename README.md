@@ -2,7 +2,7 @@
 ## I created this console app because I wanted to download all my favourite GIFs from Discord
 
 # How to use it
-## 1. Get a list of URLs and put them to a txt file using JS code down below(Control + Shift + I in Web Discord or Desktop Discord)
+## 1. Get a list of URLs using JS code down below(Control + Shift + I in Web Discord or Desktop Discord) and put them to a txt file
 ```js
 allow pasting
 ```
