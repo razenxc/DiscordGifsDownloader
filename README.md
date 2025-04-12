@@ -19,10 +19,13 @@ console.log(Object.values(gifsList).map(gif => gif.src.startsWith("//") ? "https
 // The code works at the moment of 4 April 2024
 // The code could stop working at any time
 ```
+## 2. Put ffmpeg and ffprobe executables into ./bin directory
+- https://ffbinaries.com/downloads
+- https://ffmpeg.zeranoe.com/builds/
 
-## 2. Move and drop the file to the console app
+## 3. Move and drop the file to the console app
 
-## 3. Get files in the current directory of the app(./Discord Gifs Export)
+## 4. Get files in the current directory of the app(./Discord Gifs Export)
 
 # To-Do
 - ~~Auto convert .mp4/.bin to .gif~~ 🟢 Done
